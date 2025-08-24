@@ -1,20 +1,21 @@
-FROM node:lts-buster 
+FROM node:lts-bullseye  
+
 RUN apt-get update && \
     apt-get install -y \
     ffmpeg \
     imagemagick \
     webp && \
-    apt-get upgrade -y && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-  
+
 WORKDIR /usr/src/app
 
-COPY package.json .
 
+COPY package.json ./
 RUN npm install && npm install -g qrcode-terminal pm2
 
 COPY . .
 
 EXPOSE 5000
 
-CMD ["npm", "start"]
+CMD ["npm", "start"]  
